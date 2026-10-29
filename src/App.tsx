@@ -35,12 +35,12 @@ export default function App() {
   const [lightboxItem, setLightboxItem] = useState<MediaItem | null>(null);
   const [dbTablesInitialized, setDbTablesInitialized] = useState<boolean | null>(null);
 
-  // Check URL route for /admin or #admin on mount
+  // Check URL route for /admin, subpath /admin, or #admin on mount
   useEffect(() => {
     const checkAdminRoute = () => {
-      const path = window.location.pathname;
+      const path = window.location.pathname.replace(/\/$/, '');
       const hash = window.location.hash;
-      if (path === '/admin' || hash === '#admin') {
+      if (path === '/admin' || path.endsWith('/admin') || hash === '#admin') {
         setIsAdminOpen(true);
       }
     };
@@ -182,8 +182,10 @@ export default function App() {
 
   const handleCloseAdmin = () => {
     setIsAdminOpen(false);
-    if (window.location.pathname === '/admin' || window.location.hash === '#admin') {
-      history.replaceState(null, '', window.location.pathname === '/admin' ? '/' : ' ');
+    const path = window.location.pathname.replace(/\/$/, '');
+    if (path === '/admin' || path.endsWith('/admin') || window.location.hash === '#admin') {
+      const basePath = path.endsWith('/admin') ? path.slice(0, -6) || '/' : './';
+      history.replaceState(null, '', window.location.hash === '#admin' ? ' ' : basePath);
     }
   };
 

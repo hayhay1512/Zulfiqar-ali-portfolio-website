@@ -5,6 +5,10 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    // Configures the base public path for GitHub Pages deployment.
+    // Defaults to relative ('./') so assets load correctly under any GitHub repository name (e.g. https://<user>.github.io/<repo>/)
+    // or under a custom domain. Can be overridden using the VITE_BASE_PATH environment variable if desired.
+    base: process.env.VITE_BASE_PATH || './',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {

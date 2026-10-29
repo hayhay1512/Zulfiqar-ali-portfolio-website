@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Zulfiqar Ali Portfolio</title>
+    <script>
+      // GitHub Pages SPA router fallback
+      // Automatically handles client routes (such as /admin) when loaded directly on GitHub Pages
+      (function() {
+        var l = window.location;
+        var pathSegments = l.pathname.split('/').filter(Boolean);
+        
+        // Check if hosted under a repository subpath on github.io (e.g., /repository-name/)
+        var isProjectPage = l.hostname.endsWith('.github.io') && pathSegments.length > 0;
+        var repoName = isProjectPage ? '/' + pathSegments[0] : '';
+        var subRoute = isProjectPage ? '/' + pathSegments.slice(1).join('/') : l.pathname;
+
+        if (subRoute === '/admin' || subRoute.endsWith('/admin')) {
+          l.replace(repoName + '/#admin');
+        } else {
+          l.replace(repoName + '/' + (l.search ? l.search : '') + (l.hash ? l.hash : ''));
+        }
+      })();
+    </script>
+  </head>
+  <body style="font-family: sans-serif; text-align: center; padding-top: 50px; background: #041615; color: #a3e635;">
+    <p>Loading portfolio...</p>
+  </body>
+</html>
